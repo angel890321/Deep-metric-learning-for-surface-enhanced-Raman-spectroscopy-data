@@ -1,14 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Oct 24 11:54:15 2018
-
-@author: HW def2864
-0-0-6 add standard deviation calculation, average on single spectrum file, fit average function on circular mapping 190619
-
-0-0-4 change part of code into function can be called by other
-0-0-3 change the way of import and export data form csv moldue to numpy function
-0-0-2 can remove the baselie of mutliple sigle and mapping spectra data in the same folder
-"""
 from time import time, strftime, localtime
 initial_time = time()
 from traceback import print_exc
@@ -103,7 +92,6 @@ def remove_baseline(file_name, m, step):
     y_data = np.zeros((len(rawdata), len(x_data)), dtype=np.float32)
     y_data[0] = x_data
     
-    #print('讀取處理結束')
     
     for spectrum in range(1,len(rawdata)):
         
@@ -113,26 +101,10 @@ def remove_baseline(file_name, m, step):
     print('內插光譜結束')
 
 
-    #backgrounds = np.copy(y_data)
-    #for spectrum in range(1,len(backgrounds)): 
-        #backgrounds[spectrum] = clip_baseline(y_data[spectrum], m)
-
-    #print('背景逼近結束')
-
-    #debaselined = y_data-backgrounds
-    #debaselined[0] = x_data
     if count == 0 and len(y_data) <= 2:
         y_data = y_data.transpose()
-        #backgrounds = backgrounds.transpose()
-        #debaselined = debaselined.transpose()
-        
-    #return debaselined,single_spec
+
     return y_data,single_spec
-
-    
-    
-    #save_result(x_data, y_data, backgrounds, count,file_name,new_folder_name, name = '')
-
 
 
 
