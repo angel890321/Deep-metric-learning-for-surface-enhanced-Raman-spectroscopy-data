@@ -4,6 +4,23 @@ import torch
 import numpy as np
 
 
+class SpectralPatientDataset(Dataset):
+    def __init__(self, X, y, p):
+        self.X = torch.tensor(X, dtype=torch.float32) if not isinstance(X, torch.Tensor) else X
+        self.y = torch.tensor(y, dtype=torch.long) if not isinstance(y, torch.Tensor) else y
+        self.p = p  # 保留字串，這邊不轉 tensor
+
+        assert len(self.X) == len(self.y) == len(self.p), "Length mismatch"
+
+    def __len__(self):
+        return len(self.y)
+
+    def __getitem__(self, idx):
+        x = self.X[idx]
+        y = self.y[idx]
+        p = self.p[idx]  # 字串，不轉 tensor
+        return x, y, p
+
 class SpectralDataset(Dataset):
     """
     Builds a dataset of spectral data. Use idxs to specify which samples to use
